@@ -17,7 +17,7 @@ Users are allowed to set values for account_created and account_updated.
 Password is not returned in the response payload. Used email address as my username.
 Application returned 400 Bad Request HTTP response code when a user account with the email address already exists.
 Password is stored securely using the BCrypt password hashing scheme Links to an external site. with salt Links to an external site.
-Allowed to update the information such as First Name, Last Name, Password.
+Allowed to update the information such as First Name, Last Name, Password
 
 
 
