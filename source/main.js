@@ -1,7 +1,7 @@
 const server = require("./server.js");
 
 const CONFIGURATION = require('./db/dbConfiguration');
-console.log("Please here me")
+console.log("Please here me - main.js");
 server.use((err, req, res, next) => {
     console.error(err.stack);
     res.setHeader('Content-Type', 'application/json');

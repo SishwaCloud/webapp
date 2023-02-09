@@ -3,10 +3,11 @@ const router = express.Router();
 const authorization = require('../security/authorization.js')
 const usrService = require('../service/service');
 const {verifyCreateUsr,verifyUpdateUsr} = require('../security/validation');
-
-router.get('/self',authorization,findUsr)
-router.put('/self',authorization,verifyUpdateUsr,updateUsr);
+console.log("Please here me - controller.js");
+router.get('/:id',authorization,findUsr)
+router.put('/:id',authorization,verifyUpdateUsr,updateUsr);
 router.post('/',verifyCreateUsr,createNewUsr);
+
 module.exports = router;
 
 function findUsr(req,res,next){
@@ -24,7 +25,7 @@ function updateUsr(req,res,next){
 }
 
 function createNewUsr(req,res,next){
-  usrService.createNewUsr(req.body)
+  usrService.createNewUsr(req.body,res)
   .then(data => {res.status(201);res.json(data)})
-  .catch(data => {console.log(data);res.sendStatus(400);next()});
+  .catch(data => {console.log(data);res.status(400).send("User already exists");next()});
 }

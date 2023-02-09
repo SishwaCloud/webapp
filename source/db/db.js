@@ -1,6 +1,7 @@
 const CONFIGURATION = require('./dbConfiguration')
 const mysql = require('mysql2/promise');
 const { Sequelize } = require('sequelize');
+console.log("Please here me - db.js");
 module.exports = db= {};
 let isrun = false;
 db.run = run;
@@ -23,6 +24,8 @@ async function run() {
 
     // init models and add them to the exported db object
     db.User = require('../model/model')(sequelize);
+    db.Product = require('../model/productModel')(sequelize);
+    
     console.log("after assigning")
     // sync all models with database
     await sequelize.sync();
