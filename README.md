@@ -7,6 +7,31 @@
  npm start - To start the application.
  npm test - To run the test cases.
 
+
+**Git Commands**
+git clone sshkey
+git branch
+git pull origin main
+git checkout -b branchname
+git status
+git add .
+git status
+git commit -m”message”
+git push origin branchname
+
+To go to main:
+git checkout origin main
+
+
+**To open mysql:**
+mysql -u root -p
+
+show databases;
+use webapp;
+select * from Users;
+select * from products;
+
+
 **Requirements & Description:**
 All API request/response payloads should be in JSON.
 All API calls to return with a proper HTTP status code.

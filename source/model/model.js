@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-
+console.log("Please here me - model.js");
 function model(sequelize){
   const options = {
     defaultScope: {
@@ -12,11 +12,6 @@ function model(sequelize){
     }
   };
   const  attributes={
-    id:{
-      type: DataTypes.STRING,
-      allowNull: false,
-      primaryKey: true
-    },
     username:{
       type: DataTypes.STRING,
       allowNull: false

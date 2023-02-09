@@ -1,7 +1,7 @@
-const uniqueId = require('uuid');
+// const uniqueId = require('uuid');
 const bcrypt = require('bcryptjs');
 const mySqlDb = require('../db/db');
-
+console.log("Please here me - service.js");
 async function  createNewUsr(user) {
   await mySqlDb.run();
   const userInfo = await mySqlDb.User.findOne({ where: { username: user.username } })
@@ -12,7 +12,7 @@ async function  createNewUsr(user) {
   if (user.password) {
     user.hash = await bcrypt.hash(user.password, 10);
   }
-  user.id = uniqueId.v4();
+  // user.id = uniqueId.v4();
   let formattedDateString = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
   user.account_created = formattedDateString;
   user.account_updated = formattedDateString;
