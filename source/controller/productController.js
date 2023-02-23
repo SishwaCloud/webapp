@@ -31,7 +31,8 @@ function getProductById(req, res, next) {
 function patch(req, res, next) {
     product_Service.patch(req.params.pid, req.body,req,res)
         .then(product => res.status(204).json(product))
-        .catch(next);
+        .catch(data =>{console.log(data);res.sendStatus(400);next()});
+      
 }
 
 function deleteProduct(req, res, next) {
