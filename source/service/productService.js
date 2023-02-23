@@ -19,7 +19,7 @@ params.date_added = date_ob;
 params.date_last_updated = date_ob;
 params.owner_user_id = userId;
 
-if (!(Number.isInteger(params.quantity) && params.quantity >= 0)){
+if (!(Number.isInteger(params.quantity) && params.quantity >= 0 && params.quantity <= 100)){
    throw 'Enter a valid quantity';
 }
 
@@ -42,7 +42,7 @@ async function updateProductValues(req,res){
         throw 'You are forbidden to update this product';
     }
 
-    if (!(Number.isInteger(updateProduct.quantity) && updateProduct.quantity >= 0)){
+    if (!(Number.isInteger(updateProduct.quantity) && updateProduct.quantity >= 0 && updateProduct.quantity <= 100)){
         throw 'Enter a valid quantity';
     }
     const new_data = await mySqlDb.Product.findOne({ where: { id: req.params.pid } });
@@ -74,7 +74,6 @@ async function getProductById(pid) {
 async function patch(productId, params, req, res) {
     //we get this user object from the db
     const product = await getProduct(productId);
-    console.log(product+" kajshdk");
 
     let date_ob = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
      params.date_last_updated = date_ob
@@ -84,7 +83,7 @@ async function patch(productId, params, req, res) {
         throw 'You are forbidden to update this product';
     }
     if (req.body.hasOwnProperty('quantity')){
-    if (!(Number.isInteger(params.quantity) && params.quantity >= 0)){
+    if (!(Number.isInteger(params.quantity) && params.quantity >= 0 && params.quantity <= 100)){
        
         res.status(400).send("Enter a valid quantity");
         throw 'Enter a valid quantity';

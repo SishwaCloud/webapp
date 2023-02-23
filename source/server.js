@@ -5,12 +5,12 @@ const router = express.Router();
 console.log("Please here me - server.js");
 router.get('/healthz', (req, res) => {
     console.log('inside get request');
-    res.send();
+    res.send({"error":'url not defined'});
 });
 router.get('*', (req, res) => {
     res.status(400);
     res.setHeader('Content-Type', 'application/json');
-  res.send()
+    res.send({"error":'url not defined'});
 });
 router.put('*', (req, res) => {
   res.status(400);
