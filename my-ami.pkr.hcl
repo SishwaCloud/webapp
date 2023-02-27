@@ -8,7 +8,7 @@ packer {
   }
 }
 
-
+{
 variable "aws_access_key" {
   default = "AKIAYKUYCZZVS57NRDON"
 }
