@@ -23,6 +23,7 @@ git push origin branchname
 To go to main:
 git checkout origin main
 
+Testing
 
 # **To open mysql:**
 mysql -u root -p
