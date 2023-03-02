@@ -5,7 +5,8 @@ module.exports = {
     updateProductValues,
     getProductById,
     patch,
-    deleteProduct
+    deleteProduct,
+    getProduct
 }
 async function  createNewProduct(params, req, res) {
      console.log("Please here me prod service");
