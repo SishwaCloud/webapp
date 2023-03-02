@@ -26,7 +26,7 @@ async function run() {
     // init models and add them to the exported db object
     db.User = require('../model/model')(sequelize);
     db.Product = require('../model/productModel')(sequelize);
-    db.Image = require('./imageModel')(sequelize);
+    db.Image = require('../model/imageModel')(sequelize);
     console.log("after assigning")
     // sync all models with database
     await sequelize.sync();
