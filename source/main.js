@@ -14,5 +14,4 @@ server.use((err, req, res, next) => {
 process.on('uncaughtException', function(ex) {
   console.log("server crash triggered");
   console.log(ex);
-});\\\
-''
+});
