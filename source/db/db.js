@@ -21,7 +21,9 @@ async function run() {
     await connection.query(`CREATE DATABASE IF NOT EXISTS \`${DATABASE}\`;`);
 
     // connect to db
+
     const sequelize = new Sequelize(DATABASE, MYSQL_USERNAME, MYSQL_PASSWORD, { host: CONFIGURATION.HOST, dialect: 'mysql' });
+
 
     // init models and add them to the exported db object
     db.User = require('../model/model')(sequelize);
