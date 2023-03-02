@@ -12,20 +12,21 @@ async function run() {
   }
   console.log("inside running")
     // create db if it doesn't already exist
-    const { HOST, SERVER_PORT, MYSQL_USERNAME, MYSQL_PASSWORD, DATABASE } = CONFIGURATION;
+    const { DB_PORT,HOST, SERVER_PORT, MYSQL_USERNAME, MYSQL_PASSWORD, DATABASE } = CONFIGURATION;
 
     const connection = await mysql.createConnection({  host: HOST,
       user: MYSQL_USERNAME,
-      password: MYSQL_PASSWORD});
+      password: MYSQL_PASSWORD,
+      port:DB_PORT});
     await connection.query(`CREATE DATABASE IF NOT EXISTS \`${DATABASE}\`;`);
 
     // connect to db
-    const sequelize = new Sequelize(DATABASE, MYSQL_USERNAME, MYSQL_PASSWORD, { dialect: 'mysql' });
+    const sequelize = new Sequelize(DATABASE, MYSQL_USERNAME, MYSQL_PASSWORD, { host: dbconfig.HOST, dialect: 'mysql' });
 
     // init models and add them to the exported db object
     db.User = require('../model/model')(sequelize);
     db.Product = require('../model/productModel')(sequelize);
-    
+    db.Image = require('./imageModel')(sequelize);
     console.log("after assigning")
     // sync all models with database
     await sequelize.sync();
