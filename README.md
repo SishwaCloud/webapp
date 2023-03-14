@@ -6,7 +6,7 @@ NodeJs, VS Code, Postman, MYSQL
 # **Scripts to Run:**
  npm i - To Install the dependencies.
  npm start - To start the application.
- npm test - To run the test cases.
+ npm test - To run the test cases
 
 
 # **Git Commands**
