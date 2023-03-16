@@ -91,9 +91,18 @@ const getImageById = async (req, res) => {
         }
     });
 
-    // Check if image exists
-    if (!image) {
-        return res.status(404).send('Image not found.');
+    const onlyImage = await db.Image.findOne({
+        where:{
+            image_id:image_id
+        }
+    })
+
+    if(onlyImage){
+        if (!image) {
+            return res.status(403).send("Forbidden");
+        }
+    }else{
+        return res.status(404).send("Image not Found");
     }
 
     return {

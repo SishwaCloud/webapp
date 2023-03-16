@@ -32,7 +32,8 @@ variable "profile" {
 
 variable "ami_users" {
   type    = list(string)
-  default = ["572623343211","939479158425"]
+  default =[]
+  //default = ["572623343211","939479158425"]
 }
 
 
