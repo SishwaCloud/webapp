@@ -91,7 +91,7 @@ const getImageById = async (req, res) => {
         }
     });
 
-    const onlyImage = await db.Image.findOne({
+    const onlyImage = await mySqlDb.Image.findOne({
         where:{
             image_id:image_id
         }
@@ -129,12 +129,21 @@ const deleteImage = async (req, res) => {
     });
 
     
-    // Check if image exists
-    if (!image) {
-        return res.status(404).send('Image not found.');
+    const onlyImage = await mySqlDb.Image.findOne({
+        where:{
+            image_id:image_id
+        }
+    })
+
+    if(onlyImage){
+        if (!image) {
+            return res.status(403).send("Forbidden");
+        }
+    }else{
+        return res.status(404).send("Image not Found");
     }
     const deleted = await  sss.deleteFile(image.s3_bucket_path);
-    console.log("deleted chudham", deleted)
+    
     await image.destroy();
 return image;
 }

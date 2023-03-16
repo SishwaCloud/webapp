@@ -32,14 +32,14 @@ variable "profile" {
 
 variable "ami_users" {
   type    = list(string)
-  default =[]
+  default = []
   //default = ["572623343211","939479158425"]
 }
 
 
 source "amazon-ebs" "custom-ami" {
-  profile    = var.profile
-  region     = var.aws_region
+  profile          = var.profile
+  region           = var.aws_region
   ami_name         = "csye6225_${formatdate("YYYY_MM_DD_hh_mm_ss", timestamp())}"
   instance_type    = var.instance_type
   source_ami       = var.source_ami
@@ -57,7 +57,7 @@ source "amazon-ebs" "custom-ami" {
     volume_size           = 50
     volume_type           = "gp2"
   }
-  
+
   tags = {
     Name = "Custom AMI built with Packer"
   }
