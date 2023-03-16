@@ -16,16 +16,16 @@ async function authorization (req,res,next){
   if(!existingUsr){
     res.set('WWW-Authenticate', 'Basic realm=Authorization Required');
     console.log("user not found")
-    res.status(404).send("User not found")
+    res.status(401).send("Invalid username or password")
     return
   }
   
 
 
   if(req.params.pid && req.params.image_id){
-    const onlyImage = await usersDb.Image.findOne({where:{image_id:req.params.image_id}})
+    const onlyImage = await mySqlDb.Image.findOne({where:{image_id:req.params.image_id}})
 
-    const ProductImage = await usersDb.Image.findOne({
+    const ProductImage = await mySqlDb.Image.findOne({
       where: {
           image_id: req.params.image_id,
           product_id: req.params.pid
@@ -43,7 +43,7 @@ async function authorization (req,res,next){
 
 
 
-  
+
   if(req.params.pid){
     const existingProduct = await mySqlDb.Product.findOne({where:{id:req.params.pid}})
     if(!existingProduct){
