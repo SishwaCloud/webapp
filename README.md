@@ -20,7 +20,7 @@ git status
 git commit -m”message”
 git push origin branchname
 
-To go to main:
+**To go to main:**
 git checkout origin main
 
 
