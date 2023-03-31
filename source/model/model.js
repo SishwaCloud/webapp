@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 console.log("Please here me - model.js");
+const logger = require('../logger/logger');
 function model(sequelize){
   const options = {
     defaultScope: {

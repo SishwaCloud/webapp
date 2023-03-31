@@ -2,6 +2,7 @@ const usrService = require('../service/service');
 const mySqlDb = require('../db/db');
 const basicAuthentication = require('basic-auth');
 const bcrypt = require('bcryptjs');
+const logger = require('../logger/logger');
 module.exports = authorization;
 console.log("Please here me - authorization.js");
 async function authorization (req,res,next){
@@ -11,10 +12,11 @@ async function authorization (req,res,next){
     res.sendStatus(401);
     return;
   }
-  console.log(authData +"see here")
+  logger.info("Authorization",authData)
   const existingUsr = await mySqlDb.User.findOne({where:{username:authData.name}})
   if(!existingUsr){
     res.set('WWW-Authenticate', 'Basic realm=Authorization Required');
+    logger.info("User not found")
     console.log("user not found")
     res.status(401).send("Invalid username or password")
     return
@@ -34,9 +36,12 @@ async function authorization (req,res,next){
 
   if(onlyImage){
     if (!ProductImage) {
+       logger.info("Forbidden")
         return res.status(403).send("Forbidden");
+      
     }
 }else{
+  logger.info("Image not Found")
     return res.status(404).send("Image not Found");
 }
   }

@@ -2,11 +2,12 @@ const fs = require('fs');
 const mySqlDb = require('../db/db');
 const productService = require('./productService.js');
 const sss= require('../s3');
-
+const logger = require('../logger/logger');
 async function createImage(req, res) {
 
     const productId = req.params.pid;
     console.log("productId", productId)
+    logger.info("createImage",req.file)
     const file = req.file;
     console.log("file", req.file)
     if (!file) {
@@ -18,9 +19,11 @@ async function createImage(req, res) {
     const product = await productService.getProduct(productId);
 
     console.log("product", product.dataValues);
+    logger.info("product", product.dataValues);
 
     if (!product) {
         res.status(404).send('Product not found.');
+        logger.info("Product not found.")
         throw 'Product not found.';
     }
     const filename = file.originalname;
@@ -32,6 +35,7 @@ async function createImage(req, res) {
 
        const s3lostored =   await  sss.uploadImage(file);
        console.log("s3lostored chudham", s3lostored);
+       
 
        const image = {
         product_id: productId,
@@ -42,6 +46,7 @@ async function createImage(req, res) {
     const result = await mySqlDb.Image.create(image);
 
     console.log(result.image_id, "image_id")
+    logger.info("image_id", result.image_id)
     return {
         image_id: result.image_id,
         product_id: result.product_id,
@@ -57,7 +62,7 @@ const getAllImages = async (req, res) => {
 
     // Get product and image ids from request params
     const pid = req.params.pid;
-
+    logger.info("pid", pid);
     // Get image from database
     const image = await mySqlDb.Image.findAll({
         attributes: ['image_id', 'product_id', 'file_name', 'date_created', 's3_bucket_path'],
@@ -68,6 +73,7 @@ const getAllImages = async (req, res) => {
 
     // Check if image exists
     if (!image) {
+        logger.info("Image not found.")
         return res.status(404).send('Image not found.');
     }
 
@@ -77,13 +83,14 @@ const getAllImages = async (req, res) => {
 const getImageById = async (req, res) => {
 
     console.log("req.params", req.params);
+    logger.info("req.params", req.params);
 
     // Get product and image ids from request params
     const { pid, image_id } = req.params;
 
     // Get image from database
     const image = await mySqlDb.Image.findOne({
-
+   
 
         where: {
             image_id: image_id,
@@ -99,9 +106,11 @@ const getImageById = async (req, res) => {
 
     if(onlyImage){
         if (!image) {
+            logger.info("Forbidden")
             return res.status(403).send("Forbidden");
         }
     }else{
+        logger.info("Image not Found")
         return res.status(404).send("Image not Found");
     }
 
@@ -118,7 +127,7 @@ const getImageById = async (req, res) => {
 const deleteImage = async (req, res) => {
     // Get product and image ids from request params
     const { pid, image_id } = req.params;
-
+    logger.info("deleteImage",req.params)
     // Get image from database
     const image = await mySqlDb.Image.findOne({
         where: {
@@ -137,9 +146,11 @@ const deleteImage = async (req, res) => {
 
     if(onlyImage){
         if (!image) {
+            logger.info("Forbidden")
             return res.status(403).send("Forbidden");
         }
     }else{
+        logger.info("Image not Found")
         return res.status(404).send("Image not Found");
     }
     const deleted = await  sss.deleteFile(image.s3_bucket_path);

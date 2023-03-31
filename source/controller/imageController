@@ -3,7 +3,8 @@ const router = express.Router();
 const authorization = require('../security/authorization.js');
 const imageService = require('../service/imageService.js');
 const multer = require('multer');
-
+const logger = require('../logger/logger');
+const client = require('../logger/statsd');
 // Configure multer
 const storage = multer.memoryStorage();
 const upload = multer({
@@ -26,12 +27,16 @@ router.delete('/product/:pid/image/:image_id', authorization, deleteImage);
 
 
 function uploadNewImage(req, res, next) {
+  client.increment('POSTImage', 1)
+  logger.info("Upload new image", req.body);
     imageService.createImage(req, res)
         .then(data => { res.status(201); res.json(data) })
         .catch(data => { console.log(data); res.sendStatus(400); next() });
 }
 
 function getImageById(req, res, next) {
+  client.increment('GetImage', 1)
+    logger.info("Get Image details by ID", req.body);
     imageService.getImageById(req, res)
         .then(data => { res.status(200); res.json(data) })
         .catch(data => { console.log(data); next() });
@@ -39,12 +44,16 @@ function getImageById(req, res, next) {
 
 
 function getAllImages(req, res, next) {
+  client.increment('GetAllImage', 1)
+    logger.info("Get All Images of the Product", req.body);
     imageService.getAllImages(req, res)
         .then(data => { res.status(200); res.json(data) })
         .catch(data => { console.log(data); res.sendStatus(404); next() });
 }
 
 function deleteImage(req, res, next) {
+  client.increment('DeleteImage', 1)
+    logger.info("Delete Images of then Product ", req.body);
     imageService.deleteImage(req, res)
         .then(data => { res.status(204); res.json(data) })
         .catch(data => { console.log(data); next() });

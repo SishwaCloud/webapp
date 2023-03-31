@@ -1,6 +1,7 @@
 const CONFIGURATION = require('./dbConfiguration')
 const mysql = require('mysql2/promise');
 const { Sequelize } = require('sequelize');
+const logger = require('../logger/logger');
 console.log("Please here me - db.js");
 module.exports = db= {};
 let isrun = false;
@@ -10,7 +11,7 @@ async function run() {
   if(isrun){
     return;
   }
-  console.log("inside running")
+    logger.info('Connecting to database...');
     // create db if it doesn't already exist
     const { DB_PORT,HOST, SERVER_PORT, MYSQL_USERNAME, MYSQL_PASSWORD, DATABASE } = CONFIGURATION;
 
@@ -27,7 +28,7 @@ async function run() {
     db.User = require('../model/model')(sequelize);
     db.Product = require('../model/productModel')(sequelize);
     db.Image = require('../model/imageModel')(sequelize);
-    console.log("after assigning")
+    logger.info('Database connected');
     // sync all models with database
     await sequelize.sync();
     isrun = true;

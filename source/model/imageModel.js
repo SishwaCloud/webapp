@@ -1,9 +1,10 @@
 const { DataTypes } = require('sequelize');
+const logger = require('../logger/logger');
 
 module.exports = model;
 
 function model(sequelize) {
-
+   
     const options = {
         defaultScope: {
             attributes: { exclude: ['password'] }

@@ -1,11 +1,14 @@
 // const uniqueId = require('uuid');
 const bcrypt = require('bcryptjs');
 const mySqlDb = require('../db/db');
+const logger = require('../logger/logger');
 console.log("Please here me - service.js");
 async function  createNewUsr(user) {
+  logger.info("Create New User: ",user)
   await mySqlDb.run();
   const userInfo = await mySqlDb.User.findOne({ where: { username: user.username } })
   if (userInfo) {
+    logger.error("User already exists")
     throw user.username + " user already exists";
     return;
   }
@@ -24,9 +27,11 @@ async function  createNewUsr(user) {
 }
 
 async function updateUsr(data,user){
+  logger.info("update the User Values: ",user)
   console.log('inside update user')
   let userInfo = await mySqlDb.User.findOne({ where: { username: user.name } })
   if (!userInfo) {
+    logger.error("User doesn't exists")
     throw user.username + " doesn't exists";
     return;
   }

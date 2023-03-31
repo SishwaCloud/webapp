@@ -1,7 +1,7 @@
 const http = require('http');
 const assert = require('assert');
 const app = require('../source/server.js');
-
+const logger = require('../logger/logger');
 
 
 describe('WebApp test', function() {
